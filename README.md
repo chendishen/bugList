@@ -38,10 +38,6 @@ data(){
 checkList:function(index){
    var Tindex = index;
    this.flag = index;
-   for(let i=0;i<this.adrList.length;i++){
-       this.adrList[i].check = false;
-   }
-   this.adrList[Tindex].check = true;
 }
 ```
 ```html
