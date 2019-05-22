@@ -1,6 +1,8 @@
 # bugList
 项目中遇到的较神奇的bug及解决方法
 
+#### ------------------------------------------------------------------
+
 #### Q:UI组件失效
 cube-ui里的Scroll组件，当把它的<style lang="stylus" rel="stylesheet/stylus">改成自己项目sass的<style lang="scss" type="text/css" scoped>,会导致滚动效果失效</br>
 #### A:
@@ -10,6 +12,8 @@ cube-ui里的Scroll组件，当把它的<style lang="stylus" rel="stylesheet/sty
   display:inline-block;
 }
 ```
+
+#### ------------------------------------------------------------------
 
 #### Q:实现点击切换样式的效果
 1、从后端获取到的数组adrList里遍历，给每个数组对象加一个check属性，只有一个是true,点击不同的对象的时候，会把当前对象变为true,其他的为false。（这样做是因为本身也需要把指定的check属性作为是否选中的标识传给后台，所以需要动态给数组adrList添加）  
