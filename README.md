@@ -12,7 +12,7 @@ cube-ui里的Scroll组件，当把它的<style lang="stylus" rel="stylesheet/sty
 ```
 
 #### Q:实现点击切换样式的效果
-1、从后端获取到的数组adrList里遍历，给每个数组对象加一个check属性，只有一个是true,点击不同的对象的时候，会把当前对象变为true,其他的为false。  
+1、从后端获取到的数组adrList里遍历，给每个数组对象加一个check属性，只有一个是true,点击不同的对象的时候，会把当前对象变为true,其他的为false。（这样做是因为本身也需要把指定的check属性作为是否选中的标识传给后台，所以需要动态给数组adrList添加）  
 ```js
 checkList:function(index){
    var Tindex = index;
@@ -36,7 +36,6 @@ data(){
   }
 }
 checkList:function(index){
-   var Tindex = index;
    this.flag = index;
 }
 ```
