@@ -10,7 +10,9 @@ cube-ui里的Scroll组件，当把它的<style lang="stylus" rel="stylesheet/sty
   display:inline-block;
 }
 ```
-  
+   
+     
+       
   
 #### Q:实现点击切换样式的效果
 1、从后端获取到的数组adrList里遍历，给每个数组对象加一个check属性，只有一个是true,点击不同的对象的时候，会把当前对象变为true,其他的为false。  
