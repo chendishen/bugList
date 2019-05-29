@@ -61,3 +61,34 @@ checkList:function(index){
 "sitemapLocation": "sitemap.json",
 ```
 2、app.json里，不可以添加注释！
+
+
+#### ---------------------------------------------萌得掉血的分割线------------------------------------------------
+
+#### Q:cube-ui框架的input组件，为啥“支持一键清空内容”不起作用？输入栏的“X”
+文档里的显示示例也不起作用，这什么破组件？但是我们项目需要做到“一键清空输入框内容”，我们如何去解决呢？
+#### A:
+这里有一个深坑，cube-ui绝对是我见过写文档写得最不明确的，大部分东西都需要我们去看源码来写。  
+要解决这问题，首先看下源码的这个位置cube-ui-dev=>src=>components=>input=>input.vue  
+然后在他的_showClear()方法里可以看到如下
+```js
+_showClear() {
+  let visible = this.formatedClearable.visible && this.inputValue && !this.readonly && !this.disabled
+  if (this.formatedClearable.blurHidden && !this.isFocus) {
+    visible = false
+  }
+  return visible
+}
+```
+看到重点没？？？这杀千刀的，竟然除了文档里写的“是否显示一键清空内容”外，还有好几个&&，而且没在文档说明，甚至示例你点击都不奏效！  
+那么，我们想要实现“一键清空内容”，我们需要给input组件绑定的，除了文档写的clearable之外，还需要添加readonly=false和disabled=false...  
+正确加上必要属性的input组件写法如下：
+```html
+<cube-input
+  v-model="yzmLogin.value"
+  :clearable="yzmLogin.clearable"
+  :readonly = "yzmLogin.readonly"
+  :disabled = "yzmLogin.disabled"
+  class="phone"
+></cube-input>
+```
