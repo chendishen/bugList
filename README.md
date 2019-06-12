@@ -102,7 +102,7 @@ _showClear() {
    <span class="tit-tc-span">起始点</span>
    <div class="tit-tc-div" @click="timeStart">
        <span v-if="timeBegin==''">点击选择</span>
-       <span v-else>{{timeBegin}}{{modelStartDateValue}}</span>
+       <span v-else>{{timeBegin}}</span>
    </div>
    <date-picker
        ref="datePickerStart"
