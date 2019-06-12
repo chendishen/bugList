@@ -129,7 +129,7 @@ dateSelectHandlerBegin(selectedVal) {
       console.log("modelStartDateValue:",this.modelStartDateValue)
 },
 ```
-然后就没有然后了，{{timeBegin}}只会显示时间选择器首次选择了的值，没有进行数据刷新
+然后就没有然后了，{{timeBegin}}只会显示时间选择器首次选择了的值，没有进行数据刷新，注意：console.log是完全正常的，也就是会显示选择后的最新的data的值，只是页面没有进行数据绑定刷新。
 #### A:
 我也暂时不知道这是不是个奇怪的解决方法，目前只是发现的奇怪的思路
 ```html
@@ -149,4 +149,4 @@ dateSelectHandlerBegin(selectedVal) {
     ></date-picker>
 </div>
 ```
-如上，当同时把{{timeBegin}}{{modelStartDateValue}}输出的时候，这两者都会同时刷新，但是只放{{timeBegin}}重新选择时间是不会进行刷新的，这问题预计是他封装的框架的方法的问题。
+如上，当同时把{{timeBegin}}{{modelStartDateValue}}输出的时候，这两者都会同时刷新，但是只放{{timeBegin}}重新选择时间是不会进行刷新的，只放{{modelStartDateValue}}却也是可以刷新的，这问题预计是他封装的框架的方法的问题，导致watch事件没有监听到。
