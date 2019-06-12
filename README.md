@@ -92,3 +92,60 @@ _showClear() {
   class="phone"
 ></cube-input>
 ```
+
+#### ---------------------------------------------萌得掉血的分割线------------------------------------------------
+
+#### Q:cube-ui框架的时间选择器datePiker，选择了后竟然不会触发数据的实时刷新
+我用得实在是肝疼，直接上栗子🌰
+```html
+<div class="timeStart">
+   <span class="tit-tc-span">起始点</span>
+   <div class="tit-tc-div" @click="timeStart">
+       <span v-if="timeBegin==''">点击选择</span>
+       <span v-else>{{timeBegin}}{{modelStartDateValue}}</span>
+   </div>
+   <date-picker
+       ref="datePickerStart"
+       :min="[2008, 8, 8]"
+       :max="[2020, 10, 20]"
+       :maskClosable="false"
+       @select="dateSelectHandlerBegin"
+       @cancel="_cancel"
+    ></date-picker>
+</div>
+```
+下边是methods里的选择方法
+```js
+dateSelectHandlerBegin(selectedVal) {
+      console.log(selectedVal);
+      console.log("timeBegin:",this.timeBegin);
+      this.timeBegin = selectedVal;
+      this.modelStartDateValue = new Date(
+        selectedVal[0],
+        selectedVal[1] - 1,
+        selectedVal[2]
+      ).toDateString();
+      console.log("modelStartDateValue:",this.modelStartDateValue)
+},
+```
+然后就没有然后了，{{timeBegin}}只会显示时间选择器首次选择了的值，没有进行数据刷新
+#### A:
+我也暂时不知道这是不是个奇怪的解决方法，目前只是发现的奇怪的思路
+```html
+<div class="timeStart">
+   <span class="tit-tc-span">起始点</span>
+   <div class="tit-tc-div" @click="timeStart">
+       <span v-if="timeBegin==''">点击选择</span>
+       <span v-else>{{timeBegin}}{{modelStartDateValue}}</span>
+   </div>
+   <date-picker
+       ref="datePickerStart"
+       :min="[2008, 8, 8]"
+       :max="[2020, 10, 20]"
+       :maskClosable="false"
+       @select="dateSelectHandlerBegin"
+       @cancel="_cancel"
+    ></date-picker>
+</div>
+```
+如上，当同时把{{timeBegin}}{{modelStartDateValue}}输出的时候，这两者都会同时刷新，但是只放{{timeBegin}}重新选择时间是不会进行刷新的，这问题预计是他封装的框架的方法的问题。
