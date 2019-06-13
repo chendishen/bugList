@@ -152,8 +152,8 @@ dateSelectHandlerBegin(selectedVal) {
 如上，当同时把{{timeBegin}}{{modelStartDateValue}}输出的时候，这两者都会同时刷新，但是只放{{timeBegin}}重新选择时间是不会进行刷新的，只放{{modelStartDateValue}}却也是可以刷新的，这问题预计是他封装的框架的方法的问题，导致watch事件没有监听到。
 到目前为止，我弃用了他第一个参数传递去当data数据更新，用了第三个参数，该方法没有这种问题
 ```js
-dateSelectHandlerBegin(selectedVal, b, c) {
-      this.timeBegin = c.join("");
+dateSelectHandlerBegin(selectedVal, selectedIndex, selectedText) {
+      this.timeBegin = selectedText.join("");
       this.modelStartDateValue = new Date(
         selectedVal[0],
         selectedVal[1] - 1,
