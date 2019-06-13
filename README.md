@@ -150,3 +150,40 @@ dateSelectHandlerBegin(selectedVal) {
 </div>
 ```
 如上，当同时把{{timeBegin}}{{modelStartDateValue}}输出的时候，这两者都会同时刷新，但是只放{{timeBegin}}重新选择时间是不会进行刷新的，只放{{modelStartDateValue}}却也是可以刷新的，这问题预计是他封装的框架的方法的问题，导致watch事件没有监听到。
+到目前为止，我弃用了他第一个参数传递去当data数据更新，用了第三个参数，该方法没有这种问题
+```js
+dateSelectHandlerBegin(selectedVal) {
+      this.timeBegin = c.join("");
+      this.modelStartDateValue = new Date(
+        selectedVal[0],
+        selectedVal[1] - 1,
+        selectedVal[2]
+      ).toDateString();
+},
+```
+
+
+
+#### ---------------------------------------------萌得掉血的分割线------------------------------------------------
+
+#### Q:安装了postcss-px-to-viewport，引用cube-ui（之类）的UI框架后，会导致框架样式失效
+postcss-px-to-viewport是我在项目里用vw单位的时候，用来把px直接转vw的一个webpack插件，但是引入UI框架和该插件的时候，会有冲突。
+#### A:
+在.postcssrc.js里给postcss-px-to-viewport加一个参数就可以了
+```js
+"postcss-px-to-viewport": {
+      //设计图宽度为750
+      viewportWidth: 750,
+      // 视窗的高度，根据750设备的宽度来指定，一般指定1334，也可以不配置
+      viewportHeight: 1334,
+      //小数点位数
+      unitPrecision: 3,
+      viewportUnit: 'vw',
+      selectorBlackList: ['.ignore', '.hairlines','cube-picker'],
+      //px的最小值
+      minPixelValue: 1,
+      //允许在媒体查询中转换`px`
+      mediaQuery: false,
+    }
+```
+如上，类名里带有cube-picker的，就会被此插件给忽略。但是这里我先设想到另一个情况，cube-picker这个被封装的UI组件，我很可能会进行自定义样式，一旦进行了对包含cube-picker的类改值，会不会直接被忽略了，然后沿用的还是老单位呢？这情况应该是存在的。
