@@ -287,7 +287,7 @@ B页面获取bus内容：
 二、IOS里会出现，一次在detail页的自定义分享都不成功。因为IOS里的链接，无论怎么进行push的路由变化，实际链接都还是首次打开该项目的链接。比如main是首页。进入/detail页时，url实际上还是main。故而造成连简单的一次自定义分享都不成功。
 
 #### A:
-经过调试，发现进入/detail页，先刷新一次，再进行分享，ios和安卓都没有发现自定义分享失败的情况。这是因为刷新后，安卓重新配置了配置信息。苹果重新获取了首次进入url为当前url。那么我们的解决方法就是对detail页进行刷新。经过测试，苹果可以在beforeEach进行配置，安卓则需要在afterEach里进行配置。苹果进入detail页非常正常，但是安卓需要额外刷新一次的视觉。location.replace会直接替换url，试过用location.assign,会有问题，中途凭空产生了额外一个空白的detail历史记录，所以苹果的用location.replace。
+经过调试，发现进入/detail页，先刷新一次，再进行分享，ios和安卓都没有发现自定义分享失败的情况。这是因为刷新后，安卓重新配置了配置信息。苹果重新获取了首次进入url为当前url。那么我们的解决方法就是对detail页进行刷新。经过测试，苹果可以在beforeEach进行配置，安卓则需要在afterEach里进行配置。苹果进入detail页非常正常，但是安卓需要额外刷新一次的视觉。location.replace会直接替换url，试过用location.assign,会有问题，中途凭空产生了额外一个空白的detail历史记录，导致使用返回键返回的时候，会进入一个没有数据的detail页。所以苹果的用location.replace。
 在router/index.js里对这个事情进行解决：
 ```js
 function isIOSEnv() { //判断是否为ios
