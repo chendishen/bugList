@@ -325,3 +325,37 @@ router.afterEach((to, from) => {
 })
 ```
 
+
+#### ---------------------------------------------🍉萌得掉血的分割线🍉------------------------------------------------
+
+#### Q:http-proxy-middleware的一个比较罕见的bug，独立安装该模块，进行反向代理时，某种配置会导致无法打开项目。打开http://localhost:3000/ 时显示为404
+
+```js
+const { createProxyMiddleware } = require('http-proxy-middleware');
+module.exports = function (app) {
+  app.use(createProxyMiddleware('/', {
+    target: 'http://api.baidu.com/', // 转发到的服务器的域名/IP
+    pathRewrite: {
+      "^/": ""  // 重写path
+    },
+    changeOrigin: true
+  }));
+};
+```
+
+#### A:
+代理没有指定网关（如/test）时，他会对所有的链接进行代理，包括了npm run start打开的服务器链接，需要把网关输入进行匹配。如下：
+
+```js
+const { createProxyMiddleware } = require('http-proxy-middleware');
+module.exports = function (app) {
+  app.use(createProxyMiddleware('/test', {
+    target: 'http://api.baidu.com/', // 转发到的服务器的域名/IP
+    pathRewrite: {
+      "^/test": ""  // 重写path
+    },
+    changeOrigin: true
+  }));
+};
+```
+
