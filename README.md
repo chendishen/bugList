@@ -366,6 +366,8 @@ module.exports = function (app) {
 #### Q:当组合使用antd-mobile的Tabs 和 ListView的时候，发现ReactDOM.findDOMNode(ref.current).offsetTop查找ListView该dom节点的offsetTop为0，导致上拉的时候让本该固定的Tabs却被隐藏掉了
 
 ```js
+const hei = height - ReactDOM.findDOMNode(ref.current).offsetTop;
+
 <Tabs onChange={(tab, index) => { changeTabs(tab, index); }} tabs={tabs} tabBarUnderlineStyle={{ borderBottomWidth: 0.7, borderBottomColor: '#004CDF', width: '10%', textAlign: 'center', left: '5%' }} renderTabBar={props => <Tabs.DefaultTabBar {...props} page={5} />}>
           <ListView
             key={useBodyScroll ? '0' : '1'}
@@ -394,5 +396,8 @@ module.exports = function (app) {
 ```
 
 #### A:
-尚未解决
+尚未解决，目前折中的方法是，写死ListView的ReactDOM.findDOMNode(ref.current).offsetTop为50
 
+```js
+const hei =  height - 50
+```
