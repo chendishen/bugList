@@ -1,6 +1,6 @@
 # bugList
 前端项目中遇到的较神奇的bug及解决方法,  
-ps:大部分都是滴滴框架cube-ui的坑，遇到了就丢出来了
+ps:bug主要来源于 vue的cube-ui框架,react的antd-mobile框架，以及微信公众号
 
 #### ---------------------------------------------🍉萌得掉血的分割线🍉------------------------------------------------
 
@@ -358,4 +358,41 @@ module.exports = function (app) {
   }));
 };
 ```
+
+
+
+#### ---------------------------------------------🍉萌得掉血的分割线🍉------------------------------------------------
+
+#### Q:当组合使用antd-mobile的Tabs 和 ListView的时候，发现ReactDOM.findDOMNode(ref.current).offsetTop查找ListView该dom节点的offsetTop为0，导致上拉的时候让本该固定的Tabs却被隐藏掉了
+
+```js
+<Tabs onChange={(tab, index) => { changeTabs(tab, index); }} tabs={tabs} tabBarUnderlineStyle={{ borderBottomWidth: 0.7, borderBottomColor: '#004CDF', width: '10%', textAlign: 'center', left: '5%' }} renderTabBar={props => <Tabs.DefaultTabBar {...props} page={5} />}>
+          <ListView
+            key={useBodyScroll ? '0' : '1'}
+            ref={ref}
+            dataSource={dataSource}
+            // renderHeader={() => <span>Pull to refresh</span>}
+            renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+              {isLoading ? 'Loading...' : 'Loaded'}
+            </div>)}
+            renderRow={row}
+            // renderSeparator={separator}
+            useBodyScroll={useBodyScroll}
+            style={useBodyScroll ? {} : {
+              height: height,
+              border: '1px solid #ddd',
+              margin: '5px 0',
+            }}
+            pullToRefresh={<PullToRefresh
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />}
+            onEndReached={onEndReached}
+            pageSize={5}
+          />
+</Tabs>
+```
+
+#### A:
+尚未解决
 
