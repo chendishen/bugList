@@ -396,7 +396,16 @@ const hei = height - ReactDOM.findDOMNode(ref.current).offsetTop;
 ```
 
 #### A:
-尚未解决，目前折中的方法是，写死ListView的ReactDOM.findDOMNode(ref.current).offsetTop为50
+官方组件的问题，子panel没有offsetTop高度，目前折中的方法是，给Tabs一个设定的高度，然后写死ListView的ReactDOM.findDOMNode(ref.current).offsetTop为50
+
+```css
+   #{"/deep/"} .am-tabs-tab-bar-wrap{
+        box-sizing: border-box;
+        position: relative;
+        height: 50px;
+        line-height: 50px;
+    }
+```
 
 ```js
 const hei =  height - 50
