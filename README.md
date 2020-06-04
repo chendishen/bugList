@@ -410,3 +410,37 @@ const hei = height - ReactDOM.findDOMNode(ref.current).offsetTop;
 ```js
 const hei =  height - 50
 ```
+
+
+
+
+#### ---------------------------------------------🍉萌得掉血的分割线🍉------------------------------------------------
+
+#### Q:当使用antd-mobile的PullToRefresh 下拉刷新的时候，onEndReached方法里，reacthooks的useState的set方法后，异步会导致首次获取数据不成功
+
+```js
+  const onEndReached = (event) => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setRData([...rData, ...genData(++pageIndex)])
+      setDataSource(dataSource.cloneWithRows(rData))
+      setIsLoading(false)
+    }, 1000);
+  };
+
+```
+
+#### A:加载拼接的时候应该避免进行set数据处理，推断该操作为异步操作，会导致set值后，没有获取到最新值
+
+```js
+const onEndReached = (event) => {
+    setIsLoading(true)
+    setTimeout(() => {
+      let newRData = [...rData, ...genData(++pageIndex)]
+      setRData(newRData)
+      setDataSource(dataSource.cloneWithRows(newRData))
+      setIsLoading(false)
+    }, 1000);
+ };
+```
+
