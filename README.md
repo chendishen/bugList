@@ -490,7 +490,7 @@ export function getLoginInfoByNative(user) {
 
 #### A:既然ios返回，中断了我们的数据流，根据普通的做法是无法成功的了。我们需要对ios进行单独的做法。
 
-#####一、把接收ios函数回调的方法放在actions里会导致无法回调，所以我们把他提出去正常的方法里边试试，显然可以成功了。创建一个外部的js去放置以上方法，方法可以进行回调。但是回调也没法继续执行，那我们就换个办法，获取到user数据后，直接存到本地缓存，不存到store数据里。
+##### 一、把接收ios函数回调的方法放在actions里会导致无法回调，所以我们把他提出去正常的方法里边试试，显然可以成功了。创建一个外部的js去放置以上方法，方法可以进行回调。但是回调也没法继续执行，那我们就换个办法，获取到user数据后，直接存到本地缓存，不存到store数据里。
 ```
 export function getLoginInfoByNative(user) {
   if (user!== undefined) {
@@ -499,7 +499,7 @@ export function getLoginInfoByNative(user) {
   }
 }
 ```
-#####二、我们再去利用react-hooks的useEffect去监听外部的js类的数据源
+##### 二、我们再去利用react-hooks的useEffect去监听外部的js类的数据源
 ```
 const [IOSState, setIOSState] = useState()
 useEffect(() => {
