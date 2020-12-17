@@ -539,5 +539,5 @@ const fs = window.require('fs')
 #### Q:在使用electron-builder打包electron+react开发的桌面应用的时候，安装后再打开会出现白屏（dev环境内是可以正常使用的）
 
 
-#### A:react的route在使用history模式时，无法正常加载页面。只显示白屏
+#### A:react的route在使用history模式时，无法正常加载页面，显示白屏。因为history模式需要服务端（nginx）重定向到首页，故而使用hash模式可以避免该问题
 
