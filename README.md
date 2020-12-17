@@ -520,3 +520,24 @@ useEffect(() => {
     }, [IOSState])
 ```
 ##### 总结：这是主要对于redux的机制不熟悉，Redux认为状态变更必须是由一次"行为"触发，而VUEX认为在任何时候触发状态变化只需要进行mutation即可。故redux无法在外部js方法内注入、且ios的注入也是没有回调。此时应该转变思路，将后置注入的数据直接暴露出去，然后使用react hooks的方法useEffect去监听数据的变化即可。
+
+
+
+#### ---------------------------------------------🍉萌得掉血的分割线🍉------------------------------------------------
+
+#### Q:当使用electron+react开发桌面应用的时候，在渲染进程（react项目内）使用require('electron')时就会报TypeError: fs.existsSync is not a function的错误
+
+
+#### A:因为webpack会默认打包编译，无法在获取内置的node模块，所以我们需要纯净地获取未被webpack编译过的模块，使用window.require('xx')去代替require('xx')
+```
+const fs = window.require('fs')
+```
+
+
+#### ---------------------------------------------🍉萌得掉血的分割线🍉------------------------------------------------
+
+#### Q:在使用electron-builder打包electron+react开发的桌面应用的时候，安装后再打开会出现白屏（dev环境内是可以正常使用的）
+
+
+#### A:react的route在使用history模式时，无法正常加载页面。只显示白屏
+
